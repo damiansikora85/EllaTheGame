@@ -1,42 +1,37 @@
 #! /bin/sh
 
-project="EllaTheGame"
-# NOTE the command args below make the assumption that your Unity project folder is
-#  a subdirectory of the repo root directory, e.g. for this repo "unity-ci-test" 
-#  the project folder is "UnityProject". If this is not true then adjust the 
-#  -projectPath argument to point to the right location.
-
-## Run the editor unit tests
+PROJECT_PATH=$(pwd)
+UNITY_BUILD_DIR=$(pwd)/Build
+LOG_FILE=$UNITY_BUILD_DIR/unity-win.log
 
 
-## Make the builds
-# Recall from install.sh that a separate module was needed for Windows build support
-echo "Attempting build of $project for Windows"
-/Applications/Unity/Unity.app/Contents/MacOS/Unity 
-	-batchmode 
-	-nographics 
-	-silent-crashes 
-	-logFile $(pwd)/unity.log 
-	-projectPath $(pwd) 
-	-buildWindowsPlayer "$(pwd)/Build/windows/$project.exe" 
-	-quit
+ERROR_CODE=0
+echo "Items in project path ($PROJECT_PATH):"
+ls "$PROJECT_PATH"
 
-rc1=$?
-echo "Build logs (Windows)"
-cat $(pwd)/unity.log
 
-echo "Attempting build of $project for the OSX"
-/Applications/Unity/Unity.app/Contents/MacOS/Unity 
-	-batchmode 
-	-nographics 
-	-silent-crashes 
-	-logFile $(pwd)/unity.log 
-	-projectPath $(pwd) 
-	-buildOSXUniversalPlayer "$(pwd)/Build/osx/$project.app" 
-	-quit
+echo "Building project for Windows..."
+mkdir $UNITY_BUILD_DIR
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -nographics \
+  -silent-crashes \
+  -logFile \
+  -projectPath "$PROJECT_PATH" \
+  -buildWindows64Player  "$(pwd)/build/win/ci-build.exe" \
+  -quit \
+  | tee "$LOG_FILE"
+  
+if [ $? = 0 ] ; then
+  echo "Building Windows exe completed successfully."
+  ERROR_CODE=0
+else
+  echo "Building Windows exe failed. Exited with $?."
+  ERROR_CODE=1
+fi
 
-rc2=$?
-echo "Build logs (OSX)"
-cat $(pwd)/unity.log
+#echo 'Build logs:'
+#cat $LOG_FILE
 
-exit $(($rc1|$rc2))
+echo "Finishing with code $ERROR_CODE"
+exit $ERROR_CODE
