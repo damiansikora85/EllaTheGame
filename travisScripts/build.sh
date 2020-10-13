@@ -1,6 +1,6 @@
 #! /bin/sh
 
-PROJECT_PATH=$(pwd)
+PROJECT_PATH=$(pwd)/Ella-the-game
 UNITY_BUILD_DIR=$(pwd)/Build
 LOG_FILE=$UNITY_BUILD_DIR/unity-win.log
 
