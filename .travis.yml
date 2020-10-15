@@ -4,6 +4,11 @@ rvm:
 - 2.2
 env:
   global:
+# safelist
+branches:
+  only:
+  - master
+  - stable
 cache:
   directories:
   - "$UNITY_DOWNLOAD_CACHE"
