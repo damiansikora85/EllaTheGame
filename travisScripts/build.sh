@@ -24,6 +24,7 @@ mkdir $UNITY_BUILD_DIR
   
 if [ $? = 0 ] ; then
   echo "Building Windows exe completed successfully."
+  ls "$PROJECT_PATH"
   ERROR_CODE=0
 else
   echo "Building Windows exe failed. Exited with $?."
