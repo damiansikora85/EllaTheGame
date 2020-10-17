@@ -4,7 +4,7 @@
 # to get download URLs
 UNITY_DOWNLOAD_CACHE="$(pwd)/unity_download_cache"
 UNITY_OSX_PACKAGE_URL="https://download.unity3d.com/download_unity/947e1ea5aa8d/MacEditorInstaller/Unity-2018.3.9f1.pkg"
-UNITY_WINDOWS_TARGET_PACKAGE_URL="https://beta.unity3d.com/download/46dda1414e51/MacEditorTargetInstaller/UnitySetup-Windows-Support-for-Editor-2017.2.0f3.pkg"
+UNITY_WINDOWS_TARGET_PACKAGE_URL="https://beta.unity3d.com/download/947e1ea5aa8d/MacEditorTargetInstaller/UnitySetup-Windows-Support-for-Editor-2018.3.9f1.pkg"
 
 
 # Downloads a file if it does not exist
@@ -39,4 +39,4 @@ ls $UNITY_DOWNLOAD_CACHE
 
 echo "Installing Unity..."
 install $UNITY_OSX_PACKAGE_URL
-#install $UNITY_WINDOWS_TARGET_PACKAGE_URL
+install $UNITY_WINDOWS_TARGET_PACKAGE_URL
