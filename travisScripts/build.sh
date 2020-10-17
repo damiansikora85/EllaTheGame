@@ -10,24 +10,37 @@ echo "Items in project path ($PROJECT_PATH):"
 ls "$PROJECT_PATH"
 
 
-echo "Building project for Windows..."
+#echo "Building project for Windows..."
 mkdir $UNITY_BUILD_DIR
+#/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+ # -batchmode \
+ # -nographics \
+ # -silent-crashes \
+ # -logFile \
+ # -projectPath "$PROJECT_PATH" \
+ # -buildWindows64Player  "$(pwd)/build/win/game_win.exe" \
+ # -quit \
+ # | tee "$LOG_FILE"
+
+
+echo "Building project for Osx..."
 /Applications/Unity/Unity.app/Contents/MacOS/Unity \
-  -batchmode \
-  -nographics \
-  -silent-crashes \
-  -logFile \
-  -projectPath "$PROJECT_PATH" \
-  -buildWindows64Player  "$(pwd)/build/win/ci-build.exe" \
-  -quit \
-  | tee "$LOG_FILE"
+	-batchmode \
+	-nographics \
+	-silent-crashes \
+	-logFile $(pwd)/unity.log \
+	-projectPath "$PROJECT_PATH" \
+	-buildOSXUniversalPlayer "$(pwd)/Build/osx/game_osx.app" \
+	-quit
+
+
   
 if [ $? = 0 ] ; then
-  echo "Building Windows exe completed successfully."
+  echo "Building completed successfully."
   ls "$PROJECT_PATH"
   ERROR_CODE=0
 else
-  echo "Building Windows exe failed. Exited with $?."
+  echo "Building failed. Exited with $?."
   ERROR_CODE=1
 fi
 
